@@ -50,7 +50,22 @@ app.post('/users/signin', async (req, res) => {
   if (!(user[0].password === password)) {
     return res.json({message: "INVALID_PASSWORD"})
   };
-  
+  app.post('/users/signup', async (req, res) => {
+  const { username, email, password } = req.body
+    return await appDataSource.query(`
+      INSERT INTO
+        users (
+          username,
+          email,
+          password			
+        )
+      VALUES (
+        ?,
+        ?,
+        ?
+      )
+    `, [username, email, password])
+})
   return res.json({ userId: user.id});
 })
 
